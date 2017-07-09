@@ -1,0 +1,13 @@
+C:\Users\Boost\Code\Visual Studio\RocketPal\bin\Release\RocketPal.exe.config
+C:\Users\Boost\Code\Visual Studio\RocketPal\bin\Release\RocketPal.exe
+C:\Users\Boost\Code\Visual Studio\RocketPal\bin\Release\RocketPal.pdb
+C:\Users\Boost\Code\Visual Studio\RocketPal\bin\Release\WindowsInput.dll
+C:\Users\Boost\Code\Visual Studio\RocketPal\bin\Release\WindowsInput.xml
+C:\Users\Boost\Code\Visual Studio\RocketPal\obj\Release\RocketPal.csprojResolveAssemblyReference.cache
+C:\Users\Boost\Code\Visual Studio\RocketPal\obj\Release\RocketPal.Components.FieldViewPanel.resources
+C:\Users\Boost\Code\Visual Studio\RocketPal\obj\Release\RocketPal.Components.MemoryScanInfoPanel.resources
+C:\Users\Boost\Code\Visual Studio\RocketPal\obj\Release\RocketPal.Form1.resources
+C:\Users\Boost\Code\Visual Studio\RocketPal\obj\Release\RocketPal.Properties.Resources.resources
+C:\Users\Boost\Code\Visual Studio\RocketPal\obj\Release\RocketPal.csproj.GenerateResource.Cache
+C:\Users\Boost\Code\Visual Studio\RocketPal\obj\Release\RocketPal.exe
+C:\Users\Boost\Code\Visual Studio\RocketPal\obj\Release\RocketPal.pdb

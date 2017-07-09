@@ -1,0 +1,186 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="14.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{26684071-7857-468A-8CCA-95E7F319C060}</ProjectGuid>
+    <OutputType>WinExe</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>RocketPal</RootNamespace>
+    <AssemblyName>RocketPal</AssemblyName>
+    <TargetFrameworkVersion>v4.5.2</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>0</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="System" />
+    <Reference Include="System.Configuration" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Web.Extensions" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Deployment" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Net.Http" />
+    <Reference Include="System.Windows.Forms" />
+    <Reference Include="System.Xml" />
+    <Reference Include="WindowsInput, Version=1.0.4.0, Culture=neutral, PublicKeyToken=9b287f7dc5073cad, processorArchitecture=MSIL">
+      <HintPath>packages\InputSimulator.1.0.4.0\lib\net20\WindowsInput.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Ai\Bots\BlindBot.cs" />
+    <Compile Include="Ai\Bots\Bot.cs" />
+    <Compile Include="Components\FieldViewPanel.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Components\FieldViewPanel.Designer.cs">
+      <DependentUpon>FieldViewPanel.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Components\MemoryScanInfoPanel.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Components\MemoryScanInfoPanel.Designer.cs">
+      <DependentUpon>MemoryScanInfoPanel.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Controller\Ai.cs" />
+    <Compile Include="Controller\AnalogKeyboardSimulator.cs" />
+    <Compile Include="Controller\AutoPilot.cs" />
+    <Compile Include="Controller\IInputDevice.cs" />
+    <Compile Include="Controller\IJumper.cs" />
+    <Compile Include="Controller\IRocketLeagueController.cs" />
+    <Compile Include="Controller\IRocketLeagueDriver.cs" />
+    <Compile Include="Controller\ISteerable.cs" />
+    <Compile Include="Controller\IThrottle.cs" />
+    <Compile Include="Controller\KeyboardSteerer.cs" />
+    <Compile Include="Controller\KeyboardMouseController.cs" />
+    <Compile Include="Controller\RocketLeagueKeyboardBindings.cs" />
+    <Compile Include="Controller\RocketLeagueKeyboardController.cs" />
+    <Compile Include="Controller\StupidBot.cs" />
+    <Compile Include="Extensions\InputExtension.cs" />
+    <Compile Include="Extensions\StopwatchExtensions.cs" />
+    <Compile Include="Form1.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Form1.Designer.cs">
+      <DependentUpon>Form1.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\ControlPanel.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\ControlPanel.Designer.cs">
+      <DependentUpon>ControlPanel.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Gui\RocketPalDashboard.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Gui\RocketPalDashboard.Designer.cs">
+      <DependentUpon>RocketPalDashboard.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Gui\TestGui.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Gui\TestGui.Designer.cs">
+      <DependentUpon>TestGui.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Memory\ByteMemorySignature.cs" />
+    <Compile Include="Memory\FloatRange.cs" />
+    <Compile Include="Memory\MemoryChunk.cs" />
+    <Compile Include="Memory\MemoryEdits.cs" />
+    <Compile Include="Memory\MemoryScanner.cs" />
+    <Compile Include="Memory\MemorySignature.cs" />
+    <Compile Include="Models\GameElements\BoostMeter.cs" />
+    <Compile Include="Models\GameElements\GameClock.cs" />
+    <Compile Include="Models\GameElements\GameElement.cs" />
+    <Compile Include="Models\GameObjects\Ball.cs" />
+    <Compile Include="Models\GameObjects\Car.cs" />
+    <Compile Include="Models\GameObjects\GameInstance.cs" />
+    <Compile Include="Models\GameObjects\GameObject.cs" />
+    <Compile Include="Models\GameObjects\Location.cs" />
+    <Compile Include="Models\GameObjects\Peanut.cs" />
+    <Compile Include="Models\Game\DefaultRocketLeagueInstance.cs" />
+    <Compile Include="Models\Game\GameWindow.cs" />
+    <Compile Include="Models\Game\IRocketLeagueInstance.cs" />
+    <Compile Include="Models\Game\Match.cs" />
+    <Compile Include="Models\Game\MatchmakingPlaylists.cs" />
+    <Compile Include="Models\Menus\INavigatableMenu.cs" />
+    <Compile Include="Models\Menus\InGameMenu.cs" />
+    <Compile Include="Models\Menus\IRocketLeagueMenu.cs" />
+    <Compile Include="Models\Menus\IToggleableMenu.cs" />
+    <Compile Include="Models\Menus\MainMenu.cs" />
+    <Compile Include="Program.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <EmbeddedResource Include="Components\FieldViewPanel.resx">
+      <DependentUpon>FieldViewPanel.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Components\MemoryScanInfoPanel.resx">
+      <DependentUpon>MemoryScanInfoPanel.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Form1.resx">
+      <DependentUpon>Form1.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Gui\RocketPalDashboard.resx">
+      <DependentUpon>RocketPalDashboard.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Gui\TestGui.resx">
+      <DependentUpon>TestGui.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Properties\Resources.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <Compile Include="Properties\Resources.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Resources.resx</DependentUpon>
+    </Compile>
+    <None Include="packages.config" />
+    <None Include="Properties\Settings.settings">
+      <Generator>SettingsSingleFileGenerator</Generator>
+      <LastGenOutput>Settings.Designer.cs</LastGenOutput>
+    </None>
+    <Compile Include="Properties\Settings.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Settings.settings</DependentUpon>
+      <DesignTimeSharedInput>True</DesignTimeSharedInput>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="App.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Controller\Old\" />
+    <Folder Include="Memory\C++\" />
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

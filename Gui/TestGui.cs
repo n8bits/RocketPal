@@ -68,7 +68,7 @@ namespace RocketPal.Gui
 
         private void ClockWatcher(Object sender, DoWorkEventArgs args)
         {
-            var clock = GameClock.GetClock(this.CarScanInfoPanel);
+            var clock = instance.Clock;
 
             while (clock.TimeRemaining > 0)
             {

@@ -108,6 +108,8 @@
     </Compile>
     <Compile Include="Memory\ByteMemorySignature.cs" />
     <Compile Include="Memory\FloatRange.cs" />
+    <Compile Include="Memory\IMemoryScanner.cs" />
+    <Compile Include="Memory\IGameObjectFinder.cs" />
     <Compile Include="Memory\MemoryChunk.cs" />
     <Compile Include="Memory\MemoryEdits.cs" />
     <Compile Include="Memory\MemoryScanner.cs" />

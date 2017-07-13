@@ -74,7 +74,7 @@
             this.ClockSearchProgress.Size = new System.Drawing.Size(397, 31);
             this.ClockSearchProgress.TabIndex = 1;
             // 
-            // Status
+            // StatusMessage
             // 
             this.Status.Name = "Status";
             this.Status.Size = new System.Drawing.Size(42, 17);

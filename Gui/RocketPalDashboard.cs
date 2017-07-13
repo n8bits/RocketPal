@@ -48,7 +48,7 @@ namespace RocketPal.Gui
         {
             this.Invoke(new Action(() =>
             {
-                this.Status.Text = this.instance.ga
+                this.Status.Text = this.instance.StatusMessage;
             }));
         }
 
@@ -62,7 +62,7 @@ namespace RocketPal.Gui
 
             while (DateTime.Now < expiration && clock == null)
             {
-                clock = GameClock.GetClock(this.ClockSearchProgress);
+                clock = this.instance.Clock;
             }
 
             if (clock != null)

@@ -12,7 +12,7 @@ using System.Windows.Forms;
 
 namespace RocketPal.Memory
 {
-    public class MemoryScanner
+    public class MemoryScanner : IMemoryScanner
     {
         public int CurrentPosition = 0;
         

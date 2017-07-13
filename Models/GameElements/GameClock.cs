@@ -58,18 +58,7 @@ namespace RocketPal.Models.GameElements
         public GameClock(List<int> addresses ) : base(addresses, 0,0,0)
         {
         }
-
-        public static GameClock GetClock(MemoryScanInfoPanel infoPanel = null)
-        {
-            var foundAddresses = MemoryScanner.FindSignatureInMemory(GameClock.signature, false, null, infoPanel);
-            if (foundAddresses.Any())
-            {
-                Console.WriteLine("Game Clock found at " + foundAddresses);
-                return new GameClock(foundAddresses);
-            }
-            else return null;
-        }
-
+        
         public Int32 TimeRemaining
         {
             get

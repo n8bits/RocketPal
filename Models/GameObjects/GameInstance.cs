@@ -64,6 +64,8 @@ namespace RocketPal.Models.GameObjects
 
         public MemoryScanInfoPanel ClockInfoPanel = null;
 
+        private GameClock clock;
+
         private RocketLeagueKeyboardController _menuKeyboardController;
 
         public GameInstance()
@@ -128,9 +130,9 @@ namespace RocketPal.Models.GameObjects
 
         public void LocateClock(Object sender, DoWorkEventArgs args)
         {
-            while (this.Clock == null)
+            while (this.clock == null)
             {
-                this.Clock = GameClock.GetClock(this.ClockInfoPanel);
+                this.Clock = this.Clock;
             }
             
             Thread.Sleep(1000);

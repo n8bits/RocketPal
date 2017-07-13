@@ -40,28 +40,27 @@ namespace RocketPal.Models.Game
         public Match CurrentMatch { get; set; }
 
         public MemoryScanInfoPanel ClockInfoPanel { get; set; }
-        
+
         public string StatusMessage { get; set; }
 
         public bool InGame => this.currentMatch == null;
 
-        public GameClock Clock
+        public GameClock CurrentClock { get; private set; }
+
+        public GameClock FindClock()
         {
-            get
+            var foundAddresses = MemoryScanner.FindSignatureInMemory(GameClock.signature, false, null, ClockInfoPanel);
+            if (foundAddresses.Any())
             {
-                var foundAddresses = MemoryScanner.FindSignatureInMemory(GameClock.signature, false, null, ClockInfoPanel);
-                if (foundAddresses.Any())
-                {
-                    Console.WriteLine("Game Clock found at " + foundAddresses);
-                    return new GameClock(foundAddresses);
-                }
-                else return null;
+                Console.WriteLine("Game Clock found at " + foundAddresses);
+                return new GameClock(foundAddresses);
             }
+            else return null;
         }
-        
+
         public static DefaultRocketLeagueInstance GetDefaultRocketLeagueInstance()
         {
-                return new DefaultRocketLeagueInstance();
+            return new DefaultRocketLeagueInstance();
         }
 
         public static DefaultRocketLeagueInstance OpenNewInstance()
@@ -70,7 +69,7 @@ namespace RocketPal.Models.Game
             ProcessStartInfo info = new ProcessStartInfo(executable);
 
             var process = Process.Start(info);
-            
+
             return GetDefaultRocketLeagueInstance();
         }
 
@@ -93,16 +92,16 @@ namespace RocketPal.Models.Game
         {
             get
             {
-                return this.pcControls; 
-                
+                return this.pcControls;
+
             }
 
             set { this.pcControls = value as KeyboardMouseController; }
         }
-        
+
         public void SetMatchmakingPlaylists(IList<MatchmakingPlaylists.RankedPlaylists> rankedPlaylists)
         {
-            
+
         }
 
         public void SetMatchmakingPlaylist(IList<MatchmakingPlaylists.UnrankedPlaylists> unrankedPlaylists)
@@ -118,81 +117,60 @@ namespace RocketPal.Models.Game
         public void SearchForMatch(TimeSpan timeout, bool startNewMatchWhenFinished = true)
         {
             this.StatusMessage = "Bringing window to foreground...";
+            Console.WriteLine(this.StatusMessage);
 
             this.Window.BringToForeground();
-            
+
             if (GameWindow.Focused)
             {
                 this.StatusMessage = "Bringing window to foreground...";
+                Console.WriteLine(this.StatusMessage);
 
                 BackgroundWorker worker = new BackgroundWorker();
-                
-                worker.DoWork += this.DoMatchmakingSearch;
-                worker.RunWorkerCompleted += this.RoundCompletedTask;
+
+                worker.DoWork += this.PlayAMatch;
                 worker.RunWorkerAsync(DateTime.Now.Add(timeout));
+                worker.RunWorkerCompleted += this.RoundCompletedTask;
             }
             else
             {
                 this.StatusMessage = "Bringing window to foreground...Done";
+                Console.WriteLine(this.StatusMessage);
             }
         }
 
-        public async void SearchForClock()
+        /// <summary>
+        /// Push the "Find Match" button and begin searching game memory for game objects. 
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="args" >Expiration DateTime after which the search should be canceled.</param>
+        private void PlayAMatch(object sender, DoWorkEventArgs args)
         {
-            if (this.clockWorker.IsBusy || this.InGame)
-            {
-                return;
-            }
-            else
-            {
-                this.clockWorker.DoWork += (object sender, DoWorkEventArgs args) =>
-                {
-                    DateTime expiration = DateTime.Now.AddSeconds(120);
-                    var instance = DefaultRocketLeagueInstance.GetDefaultRocketLeagueInstance();
-
-                    GameClock clock = null;
-
-                    while (DateTime.Now < expiration && clock == null)
-                    {
-                        clock = this.Clock;
-                    }
-
-                    if (clock != null)
-                    {
-                        instance.CurrentMatch = new Match(clock);
-                        instance.CurrentMatch.WatchClock();
-                    }
-                };
-            }
-        }
-
-         /// <summary>
-         /// Push the "Find Match" button and begin searching game memory for game objects. 
-         /// </summary>
-         /// <param name="sender"></param>
-         /// <param name="args" >Expiration DateTime after which the search should be canceled.</param>
-        private void DoMatchmakingSearch(object sender, DoWorkEventArgs args)
-        {
-            DateTime expiration = (DateTime) args.Argument;
+            DateTime expiration = (DateTime)args.Argument;
 
             this.MainMenu.FindMatch();
             this.ControlBot.GiveControl(this);
-            while (DateTime.Now < expiration && this.Clock == null)
-            {
-                this.SearchForClock();
 
+            // Search for clock until expiration runs out
+            //while (DateTime.Now < expiration && this.CurrentClock == null)
+            while (this.CurrentClock == null)
+            {
+                this.CurrentClock = this.FindClock();
+                if (this.CurrentClock.TimeRemaining > 1000 || CurrentClock.TimeRemaining == 0)
+                {
+                    this.CurrentClock = null;
+                }
                 this.StatusMessage = "Waiting for match to be found....giving up in " +
                                      expiration.Subtract(DateTime.Now).Seconds;
+                Console.WriteLine(this.StatusMessage);
                 Thread.Sleep(100);
             }
 
-            this.StatusMessage = "Match found.";
+            this.StatusMessage = "Clock found.";
+            this.CurrentMatch = new Match(this.CurrentClock);
+            this.Controller.GoBack();
 
-            this.CurrentMatch = new Match(Clock);
-            this.CurrentMatch.WatchClock();
-            
-
-            while (currentMatch.MatchComplete != true)
+            while (this.CurrentMatch.MatchComplete != true)
             {
                 Thread.Sleep(100);
             }
@@ -211,13 +189,17 @@ namespace RocketPal.Models.Game
 
         private void RoundCompletedTask(object sender, AsyncCompletedEventArgs args)
         {
+
             this.StatusMessage = "Round has concluded. Revoking controls...";
+            Console.WriteLine(this.StatusMessage);
             this.ControlBot.RevokeControl();
             this.StatusMessage = this.StatusMessage + "Done";
-            Thread.Sleep(1000);
-            if (this.ContinuousPlay)
+            Console.WriteLine(this.StatusMessage);
+            Thread.Sleep(10000);
+            if (true)
             {
                 this.StatusMessage = "Continuous search is on, begining next match..";
+                Console.WriteLine(this.StatusMessage);
 
                 this.SearchForMatch(TimeSpan.FromMinutes(3));
             }

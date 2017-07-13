@@ -20,7 +20,7 @@ namespace RocketPal.Models.Game
 
         bool InGame { get; }
 
-        GameClock Clock { get; }
+        GameClock CurrentClock { get; }
 
         void SearchForMatch(TimeSpan timeout, bool continuousSearch = true);
 

@@ -5,6 +5,7 @@ using System.Data;
 using System.Drawing;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using RocketPal.Ai.Bots;
@@ -33,16 +34,16 @@ namespace RocketPal.Gui
                 this.Status.Text = "Beginning Search...";
                 instance.SearchForMatch(TimeSpan.FromSeconds(120));
 
-                this.Status.Text = "Search worker started.";
+                
             }));
            
         }
 
         private void FindClockButton_Click(object sender, EventArgs e)
         {
-            BackgroundWorker worker = new BackgroundWorker();
-            worker.DoWork += this.LocateClock;
-            worker.RunWorkerAsync();
+            //BackgroundWorker worker = new BackgroundWorker();
+            //worker.DoWork += this.LocateClock;
+            //worker.RunWorkerAsync();
         }
 
         private void OnClockLocated(object sender, RunWorkerCompletedEventArgs args)
@@ -53,25 +54,25 @@ namespace RocketPal.Gui
             }));
         }
 
-        private void LocateClock(object sender, DoWorkEventArgs args)
-        {
-            DateTime expiration = DateTime.Now.AddSeconds(120);
-            var instance = DefaultRocketLeagueInstance.GetDefaultRocketLeagueInstance();
-           instance.ClockInfoPanel = this.ClockSearchProgress;
+        //private void LocateClock(object sender, DoWorkEventArgs args)
+        //{
+        //    DateTime expiration = DateTime.Now.AddSeconds(120);
+        //    var instance = DefaultRocketLeagueInstance.GetDefaultRocketLeagueInstance();
+        //   instance.ClockInfoPanel = this.ClockSearchProgress;
 
-            GameClock clock = null;
+        //    GameClock clock = null;
 
-            while (DateTime.Now < expiration && clock == null)
-            {
-                clock = this.instance.Clock;
-            }
+        //    while (DateTime.Now < expiration && clock == null)
+        //    {
+        //        clock = this.instance.Clock;
+        //    }
 
-            if (clock != null)
-            {
-                instance.CurrentMatch = new Match(clock);
-                instance.CurrentMatch.WatchClock();
-            }
-        }
+        //    if (clock != null)
+        //    {
+        //        instance.CurrentMatch = new Match(clock);
+        //        instance.CurrentMatch.WatchClock();
+        //    }
+        //}
 
         private void trackBar1_ValueChanged(object sender, EventArgs e)
         {

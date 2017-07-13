@@ -16,10 +16,12 @@ namespace RocketPal.Models.Game
 
         public Match(GameClock clock)
         {
+            this.MatchComplete = false;
             this.GameClock = clock;
+            this.WatchClock();
         }
 
-        public void WatchClock()
+        private void WatchClock()
         {
             BackgroundWorker worker = new BackgroundWorker();
             worker.DoWork += this.ClockWatcher;
@@ -57,6 +59,7 @@ namespace RocketPal.Models.Game
             }
 
             this.MatchComplete = true;
+            Console.WriteLine("Match is complete in clockwatcher.");
         }
 
         public bool MatchComplete { get; private set; }

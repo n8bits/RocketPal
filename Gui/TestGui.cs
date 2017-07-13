@@ -68,7 +68,7 @@ namespace RocketPal.Gui
 
         private void ClockWatcher(Object sender, DoWorkEventArgs args)
         {
-            var clock = instance.Clock;
+            var clock = instance.CurrentClock;
 
             while (clock.TimeRemaining > 0)
             {

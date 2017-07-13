@@ -33,6 +33,11 @@ namespace RocketPal.Models.Game
             while (this.GameClock.TimeRemaining > 0)
             {
                 Console.WriteLine("Clock:  " + this.GameClock.TimeRemaining);
+                if (this.GameClock.TimeRemaining > 10000)
+                {
+                    Console.WriteLine("Bad clock data, forcing round end...");
+                    break;
+                }
                 Thread.Sleep(400);
             }
 

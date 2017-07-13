@@ -118,7 +118,8 @@ namespace RocketPal.Models.Game
         {
             this.StatusMessage = "Bringing window to foreground...";
             Console.WriteLine(this.StatusMessage);
-
+            this.CurrentClock = null;
+            this.CurrentMatch = null;
             this.Window.BringToForeground();
 
             if (GameWindow.Focused)
@@ -148,9 +149,9 @@ namespace RocketPal.Models.Game
         {
             DateTime expiration = (DateTime)args.Argument;
 
-            this.MainMenu.FindMatch();
+            //this.MainMenu.FindMatch();
+            this.Controller.Jump();
             this.ControlBot.GiveControl(this);
-
             // Search for clock until expiration runs out
             //while (DateTime.Now < expiration && this.CurrentClock == null)
             while (this.CurrentClock == null)
@@ -164,11 +165,13 @@ namespace RocketPal.Models.Game
                                      expiration.Subtract(DateTime.Now).Seconds;
                 Console.WriteLine(this.StatusMessage);
                 Thread.Sleep(100);
+                
             }
 
             this.StatusMessage = "Clock found.";
+            
             this.CurrentMatch = new Match(this.CurrentClock);
-            this.Controller.GoBack();
+           // this.Controller.GoBack();
 
             while (this.CurrentMatch.MatchComplete != true)
             {
@@ -195,7 +198,8 @@ namespace RocketPal.Models.Game
             this.ControlBot.RevokeControl();
             this.StatusMessage = this.StatusMessage + "Done";
             Console.WriteLine(this.StatusMessage);
-            Thread.Sleep(10000);
+            Thread.Sleep(20000);
+            this.Controller.Jump();
             if (true)
             {
                 this.StatusMessage = "Continuous search is on, begining next match..";

@@ -11,6 +11,7 @@ using System.Threading.Tasks;
 using WindowsInput;
 using WindowsInput.Native;
 using RocketPal.Extensions;
+using RocketPal.Models.Game;
 
 namespace RocketPal.Controller
 {
@@ -18,7 +19,7 @@ namespace RocketPal.Controller
     {
         public static readonly double DefaultTolerance = 0.000001d;
 
-        public int PwmIntervalNanoseconds;
+        public double PwmIntervalNanoseconds;
 
         private BackgroundWorker pwmWorker;
 
@@ -39,6 +40,11 @@ namespace RocketPal.Controller
         {
             amount = amount > 1 ? 1 : amount; // normalize to max value of 1
 
+            if (amount < 0)
+            {
+                amount = 0;
+            }
+
             // Return if the new amount is the same as the current amount
             if (Math.Abs(this.GetDownAmount(key) - amount) < DefaultTolerance)
             {
@@ -58,9 +64,18 @@ namespace RocketPal.Controller
             this.updateKeyDownAmount(key, amount);
         }
 
-        public void AnalogKeyUp(VirtualKeyCode key)
+        public void AnalogKeyUp(VirtualKeyCode keyCode)
         {
+            this.currentlyDownAmounts[keyCode] = 0;
 
+            BackgroundWorker worker = null;
+
+            if (this.currentlyDownKeys.TryGetValue(keyCode, out worker))
+            {
+                worker.CancelAsync();
+                
+            }
+            this.KeyUp(keyCode);
         }
 
         public double GetDownAmount(VirtualKeyCode keyCode)
@@ -77,16 +92,25 @@ namespace RocketPal.Controller
             if (this.currentlyDownKeys.TryGetValue(keyCode, out worker))
             {
                 worker.CancelAsync();
-                worker.Dispose();
+                while (worker.IsBusy)
+                {
+                    Console.WriteLine("Worker is still busy");
+                    Thread.Sleep(1);
+                }
+                this.currentlyDownKeys[keyCode] = worker;
+                this.currentlyDownKeys[keyCode].RunWorkerAsync(new object[] { keyCode, amount });
+            }
+            else
+            {
+                worker = new BackgroundWorker();
+                worker.WorkerSupportsCancellation = true;
+                worker.DoWork += this.DoAnalogKeyDown;
+                worker.RunWorkerCompleted += this.KeyPresserWorkComplete;
+                this.currentlyDownKeys[keyCode] = worker;
+                this.currentlyDownKeys[keyCode].RunWorkerAsync(new object[] { keyCode, amount });
             }
 
-            var analogKeyPresser = new BackgroundWorker();
-            analogKeyPresser.WorkerSupportsCancellation = true;
-            analogKeyPresser.DoWork += this.DoAnalogKeyDown;
-            analogKeyPresser.RunWorkerCompleted += this.KeyPresserWorkComplete;
-
-            this.currentlyDownKeys[keyCode] = analogKeyPresser;
-            this.currentlyDownKeys[keyCode].RunWorkerAsync(new object[] { keyCode, amount });
+            
         }
 
         public bool IsKeyDown(VirtualKeyCode key)
@@ -109,13 +133,14 @@ namespace RocketPal.Controller
 
             while (!worker.CancellationPending)
             {
+                GameWindow.WaitForFocus();
                 this.KeyDown(key);
 
-                this.Sleep(onTime);
+                Thread.Sleep(onTime);
 
                 this.KeyUp(key);
 
-                this.Sleep(offTime);
+                Thread.Sleep(offTime);
             }
             args.Cancel = true;
         }

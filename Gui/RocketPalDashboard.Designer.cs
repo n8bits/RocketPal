@@ -31,9 +31,13 @@
             this.StartButton = new System.Windows.Forms.Button();
             this.FindClockButton = new System.Windows.Forms.Button();
             this.StatusStrip = new System.Windows.Forms.StatusStrip();
-            this.ClockSearchProgress = new RocketPal.Components.MemoryScanInfoPanel();
             this.Status = new System.Windows.Forms.ToolStripStatusLabel();
+            this.trackBar1 = new System.Windows.Forms.TrackBar();
+            this.SteeringSlider = new System.Windows.Forms.TrackBar();
+            this.ClockSearchProgress = new RocketPal.Components.MemoryScanInfoPanel();
             this.StatusStrip.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.trackBar1)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.SteeringSlider)).BeginInit();
             this.SuspendLayout();
             // 
             // StartButton
@@ -67,6 +71,32 @@
             this.StatusStrip.TabIndex = 6;
             this.StatusStrip.Text = "Idle";
             // 
+            // Status
+            // 
+            this.Status.Name = "Status";
+            this.Status.Size = new System.Drawing.Size(42, 17);
+            this.Status.Text = "Ready.";
+            // 
+            // trackBar1
+            // 
+            this.trackBar1.BackColor = System.Drawing.SystemColors.ActiveCaptionText;
+            this.trackBar1.LargeChange = 2;
+            this.trackBar1.Location = new System.Drawing.Point(79, 28);
+            this.trackBar1.Minimum = -10;
+            this.trackBar1.Name = "trackBar1";
+            this.trackBar1.Size = new System.Drawing.Size(287, 45);
+            this.trackBar1.TabIndex = 8;
+            this.trackBar1.ValueChanged += new System.EventHandler(this.trackBar1_ValueChanged);
+            // 
+            // SteeringSlider
+            // 
+            this.SteeringSlider.Location = new System.Drawing.Point(404, 28);
+            this.SteeringSlider.Minimum = -10;
+            this.SteeringSlider.Name = "SteeringSlider";
+            this.SteeringSlider.Size = new System.Drawing.Size(332, 45);
+            this.SteeringSlider.TabIndex = 9;
+            this.SteeringSlider.ValueChanged += new System.EventHandler(this.SteeringSlider_ValueChanged);
+            // 
             // ClockSearchProgress
             // 
             this.ClockSearchProgress.Location = new System.Drawing.Point(36, 190);
@@ -74,17 +104,13 @@
             this.ClockSearchProgress.Size = new System.Drawing.Size(397, 31);
             this.ClockSearchProgress.TabIndex = 1;
             // 
-            // StatusMessage
-            // 
-            this.Status.Name = "Status";
-            this.Status.Size = new System.Drawing.Size(42, 17);
-            this.Status.Text = "Ready.";
-            // 
             // RocketPalDashboard
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(776, 263);
+            this.Controls.Add(this.SteeringSlider);
+            this.Controls.Add(this.trackBar1);
             this.Controls.Add(this.StatusStrip);
             this.Controls.Add(this.FindClockButton);
             this.Controls.Add(this.ClockSearchProgress);
@@ -93,6 +119,8 @@
             this.Text = "RocketPalDashboard";
             this.StatusStrip.ResumeLayout(false);
             this.StatusStrip.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.trackBar1)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.SteeringSlider)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -105,5 +133,7 @@
         private System.Windows.Forms.Button FindClockButton;
         private System.Windows.Forms.StatusStrip StatusStrip;
         private System.Windows.Forms.ToolStripStatusLabel Status;
+        private System.Windows.Forms.TrackBar trackBar1;
+        private System.Windows.Forms.TrackBar SteeringSlider;
     }
 }

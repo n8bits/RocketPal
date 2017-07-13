@@ -10,7 +10,11 @@ namespace RocketPal.Controller
     {
         bool BoostEngaged { get; set; }
 
+        bool Enabled { get; set; }
+
         float Throttle { get; set; }
+
+        float SteeringPosition { get; }
 
         void Jump();
 

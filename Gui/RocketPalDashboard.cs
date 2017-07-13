@@ -15,7 +15,7 @@ namespace RocketPal.Gui
 {
     public partial class RocketPalDashboard : Form
     {
-        private IRocketLeagueInstance instance;
+        private DefaultRocketLeagueInstance instance;
 
         public RocketPalDashboard()
         {
@@ -26,11 +26,13 @@ namespace RocketPal.Gui
         private void StartButton_Click(object sender, EventArgs e)
         {
             this.Invoke(new Action(() => {
-                var instance = DefaultRocketLeagueInstance.GetDefaultRocketLeagueInstance();
+                this.instance = DefaultRocketLeagueInstance.GetDefaultRocketLeagueInstance();
                 this.Status.Text = "Default Instance Aquired.";
-                instance.ClockInfoPanel = this.ClockSearchProgress;
+                this.instance.ClockInfoPanel = this.ClockSearchProgress;
+                
                 this.Status.Text = "Beginning Search...";
                 instance.SearchForMatch(TimeSpan.FromSeconds(120));
+
                 this.Status.Text = "Search worker started.";
             }));
            
@@ -38,7 +40,6 @@ namespace RocketPal.Gui
 
         private void FindClockButton_Click(object sender, EventArgs e)
         {
-            
             BackgroundWorker worker = new BackgroundWorker();
             worker.DoWork += this.LocateClock;
             worker.RunWorkerAsync();
@@ -71,6 +72,15 @@ namespace RocketPal.Gui
                 instance.CurrentMatch.WatchClock();
             }
         }
-        
+
+        private void trackBar1_ValueChanged(object sender, EventArgs e)
+        {
+            this.instance.Controller.Throttle = (float) trackBar1.Value/10f;
+        }
+
+        private void SteeringSlider_ValueChanged(object sender, EventArgs e)
+        {
+            this.instance.Controller.Steer(((float) SteeringSlider.Value)/10f);
+        }
     }
 }

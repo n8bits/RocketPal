@@ -80,6 +80,9 @@ namespace RocketPal.Models.Game
             ControlBot = new BlindBot();
             this.clockWorker = new BackgroundWorker();
             this.clockWorker.WorkerReportsProgress = true;
+            //var windowWatcher = new BackgroundWorker();
+            //windowWatcher.DoWork += this.MonitorWindowFocus;
+            //windowWatcher.RunWorkerAsync();
         }
 
         public KeyboardMouseController PcControls => this.pcControls;
@@ -118,12 +121,12 @@ namespace RocketPal.Models.Game
 
             this.Window.BringToForeground();
             
-            if (this.Window.Focused)
+            if (GameWindow.Focused)
             {
                 this.StatusMessage = "Bringing window to foreground...";
 
                 BackgroundWorker worker = new BackgroundWorker();
-
+                
                 worker.DoWork += this.DoMatchmakingSearch;
                 worker.RunWorkerCompleted += this.RoundCompletedTask;
                 worker.RunWorkerAsync(DateTime.Now.Add(timeout));
@@ -173,31 +176,49 @@ namespace RocketPal.Models.Game
             DateTime expiration = (DateTime) args.Argument;
 
             this.MainMenu.FindMatch();
-
+            this.ControlBot.GiveControl(this);
             while (DateTime.Now < expiration && this.Clock == null)
             {
                 this.SearchForClock();
+
                 this.StatusMessage = "Waiting for match to be found....giving up in " +
                                      expiration.Subtract(DateTime.Now).Seconds;
                 Thread.Sleep(100);
             }
-            
+
+            this.StatusMessage = "Match found.";
+
             this.CurrentMatch = new Match(Clock);
             this.CurrentMatch.WatchClock();
-            this.ControlBot.GiveControl(this);
+            
 
             while (currentMatch.MatchComplete != true)
             {
                 Thread.Sleep(100);
             }
 
-            this.ControlBot.RevokeControl();
+            this.StatusMessage = "Match is complete.";
+        }
+
+        private void MonitorWindowFocus(object sender, DoWorkEventArgs args)
+        {
+            while (true)
+            {
+                Thread.Sleep(10);
+                this.Controller.Enabled = GameWindow.Focused;
+            }
         }
 
         private void RoundCompletedTask(object sender, AsyncCompletedEventArgs args)
         {
+            this.StatusMessage = "Round has concluded. Revoking controls...";
+            this.ControlBot.RevokeControl();
+            this.StatusMessage = this.StatusMessage + "Done";
+            Thread.Sleep(1000);
             if (this.ContinuousPlay)
             {
+                this.StatusMessage = "Continuous search is on, begining next match..";
+
                 this.SearchForMatch(TimeSpan.FromMinutes(3));
             }
         }

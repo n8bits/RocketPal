@@ -82,6 +82,8 @@ namespace RocketPal.Controller
             }
         }
 
+        public bool Enabled { get; set; }
+
         public void Jump()
         {
             this.InputSimulator.Mouse.RightButtonClick();
@@ -330,7 +332,7 @@ namespace RocketPal.Controller
 
         public void Steer(double amount)
         {
-            throw new NotImplementedException();
+            this.SteeringPosition = (float) amount;
         }
 
         public void SteerLeft(double amount)

@@ -28,7 +28,7 @@ namespace RocketPal.Gui
         {
             while (true)
             {
-                if (instance.Window.Focused)
+                if (GameWindow.Focused)
                 {
                     this.instance.Controller.Steer(.2);
                     this.instance.Controller.Throttle = .9f;
@@ -48,7 +48,7 @@ namespace RocketPal.Gui
         {
             instance.Window.BringToForeground();
 
-            if (instance.Window.Focused)
+            if (GameWindow.Focused)
             {
                 instance.MainMenu.FindMatch();
             }

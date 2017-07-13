@@ -10,7 +10,7 @@ namespace RocketPal.Models.Game
 {
     public class GameWindow
     {
-        public bool Focused
+        public static bool Focused
         {
             get
             {
@@ -19,7 +19,7 @@ namespace RocketPal.Models.Game
                 while (activeWindow == null)
                 {
                     activeWindow = Title;
-                    Thread.Sleep(10);
+                    //Thread.Sleep(10);
                 }
 
                 return (activeWindow.Contains("Rocket League") && !activeWindow.Contains("Trainer"));
@@ -36,6 +36,14 @@ namespace RocketPal.Models.Game
                 return MemoryEdits.GetWindowText(handle, Buff, nChars) > 0 ? Buff.ToString() : null;
             }
            
+        }
+
+        public static void WaitForFocus()
+        {
+            while (!GameWindow.Focused)
+            {
+                Thread.Sleep(1);
+            }
         }
 
         public  void BringToForeground()

@@ -52,6 +52,9 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="..\Code\Repos\Statistics\Probability\Probability\Lottery.cs">
+      <Link>Lottery.cs</Link>
+    </Compile>
     <Compile Include="Ai\Bots\BlindBot.cs" />
     <Compile Include="Ai\Bots\Bot.cs" />
     <Compile Include="Components\FieldViewPanel.cs">
@@ -176,6 +179,9 @@
   <ItemGroup>
     <Folder Include="Controller\Old\" />
     <Folder Include="Memory\C++\" />
+  </ItemGroup>
+  <ItemGroup>
+    <WCFMetadata Include="Service References\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

@@ -86,6 +86,8 @@ namespace RocketPal.Ai.Bots
                 }
                 Thread.Sleep(500);
             }
+
+            (sender as BackgroundWorker).Dispose();
         }
 
         public void RevokeControl()

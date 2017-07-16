@@ -46,7 +46,7 @@ namespace RocketPal.Gui
 
         private void GoToRootButton_Click(object sender, EventArgs e)
         {
-            instance.Window.BringToForeground();
+            GameWindow.BringToForeground();
 
             if (GameWindow.Focused)
             {

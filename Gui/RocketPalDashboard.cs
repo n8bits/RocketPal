@@ -83,5 +83,15 @@ namespace RocketPal.Gui
         {
             this.instance.Controller.Steer(((float) SteeringSlider.Value)/10f);
         }
+
+        private void RunBlindBotButton_Click(object sender, EventArgs e)
+        {
+            if (this.instance == null)
+            {
+                this.instance = DefaultRocketLeagueInstance.GetDefaultRocketLeagueInstance();
+            }
+            GameWindow.BringToForeground();
+            this.instance.ControlBot.GiveControl(this.instance);
+        }
     }
 }

@@ -35,6 +35,7 @@
             this.trackBar1 = new System.Windows.Forms.TrackBar();
             this.SteeringSlider = new System.Windows.Forms.TrackBar();
             this.ClockSearchProgress = new RocketPal.Components.MemoryScanInfoPanel();
+            this.RunBlindBotButton = new System.Windows.Forms.Button();
             this.StatusStrip.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.trackBar1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.SteeringSlider)).BeginInit();
@@ -104,11 +105,22 @@
             this.ClockSearchProgress.Size = new System.Drawing.Size(397, 31);
             this.ClockSearchProgress.TabIndex = 1;
             // 
+            // RunBlindBotButton
+            // 
+            this.RunBlindBotButton.Location = new System.Drawing.Point(635, 149);
+            this.RunBlindBotButton.Name = "RunBlindBotButton";
+            this.RunBlindBotButton.Size = new System.Drawing.Size(118, 45);
+            this.RunBlindBotButton.TabIndex = 10;
+            this.RunBlindBotButton.Text = "Run Blind Bot";
+            this.RunBlindBotButton.UseVisualStyleBackColor = true;
+            this.RunBlindBotButton.Click += new System.EventHandler(this.RunBlindBotButton_Click);
+            // 
             // RocketPalDashboard
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(776, 263);
+            this.Controls.Add(this.RunBlindBotButton);
             this.Controls.Add(this.SteeringSlider);
             this.Controls.Add(this.trackBar1);
             this.Controls.Add(this.StatusStrip);
@@ -135,5 +147,6 @@
         private System.Windows.Forms.ToolStripStatusLabel Status;
         private System.Windows.Forms.TrackBar trackBar1;
         private System.Windows.Forms.TrackBar SteeringSlider;
+        private System.Windows.Forms.Button RunBlindBotButton;
     }
 }

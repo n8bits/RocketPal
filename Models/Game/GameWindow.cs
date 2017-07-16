@@ -46,7 +46,7 @@ namespace RocketPal.Models.Game
             }
         }
 
-        public  void BringToForeground()
+        public static void BringToForeground()
         {
             var WINDOW_HANDLER = MemoryEdits.FindWindow(null, @"Rocket League (32-bit, DX9)");
             if (WINDOW_HANDLER == 0)

@@ -120,7 +120,7 @@ namespace RocketPal.Models.Game
             Console.WriteLine(this.StatusMessage);
             this.CurrentClock = null;
             this.CurrentMatch = null;
-            this.Window.BringToForeground();
+            GameWindow.BringToForeground();
 
             if (GameWindow.Focused)
             {

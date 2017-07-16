@@ -21,7 +21,7 @@ namespace RocketPal.Ai.Bots
         {
             this.instance = instance;
             this.inControl = true;
-
+            this.instance.Controller.Enabled = true;
             BackgroundWorker worker = new BackgroundWorker();
             worker.DoWork += this.SteerRandomly;
             worker.RunWorkerAsync();
@@ -35,13 +35,13 @@ namespace RocketPal.Ai.Bots
                 GameWindow.WaitForFocus();
                 this.instance.Controller.Enabled = true;
 
-                if (PlayLottery(0.005d))
+                if (PlayLottery(0.025d))
                 {
                     this.instance.Controller.Jump();
 
                     if (PlayLottery(0.5d))
                     {
-                        Thread.Sleep(100);
+                        //Thread.Sleep(100);
                         this.instance.Controller.Jump();
                     }
                 }
